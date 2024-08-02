@@ -3,15 +3,16 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 import { getFirestore, doc, setDoc } from "firebase/firestore";
+const env = import.meta.env;
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCR7fa1F49GUw5J0t200Tu4uAIoOcDUBaI",
-  authDomain: "financely-tracker-1dff2.firebaseapp.com",
-  projectId: "financely-tracker-1dff2",
-  storageBucket: "financely-tracker-1dff2.appspot.com",
-  messagingSenderId: "194120317626",
-  appId: "1:194120317626:web:af4a4e39c4b6ef93cd2083",
-  measurementId: "G-M5ZFMRF2G8",
+  apiKey: env.VITE_FIREBASE_API_KEY,
+  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: env.VITE_FIREBASE_PROJECT_ID ,
+  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET ,
+  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID ,
+  appId: env.VITE_FIREBASE_APP_ID ,
+  measurementId: env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
