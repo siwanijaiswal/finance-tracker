@@ -1,7 +1,7 @@
 import React from "react";
 import "./SignUpSignIn.css";
 import { useState } from "react";
-import FormInput from "../form-input/FormInput";
+import FormInput from "../FormInput/FormInput.jsx";
 import Button from "../Button/Button.jsx";
 
 const defaultFormFields = {
