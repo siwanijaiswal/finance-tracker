@@ -19,3 +19,11 @@ body {
 input {
   font-family: "Montserrat", sans-serif;
 }
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 90vh;
+}
