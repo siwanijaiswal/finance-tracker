@@ -40,7 +40,6 @@ export const signInWithGooglePopUp = (setLoading, fullName) => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
         const user = result.user;
         console.log("user is", user);
         createUserDocumentFromAuth(user, fullName, setLoading);
@@ -48,7 +47,6 @@ export const signInWithGooglePopUp = (setLoading, fullName) => {
         setLoading(false);
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
         toast.error(errorMessage);
         setLoading(false);
@@ -83,7 +81,6 @@ export const createAuthUserWithEmailAndPassword = async (
         await createUserDocumentFromAuth(user, fullName, setLoading);
         return true;
       } catch (error) {
-        const errorCode = error.code;
         const errorMessage = error.message;
         toast.error(errorMessage);
         setLoading(false);
@@ -116,7 +113,6 @@ export const signInAuthUserWithEmailAndPassword = async (
       const user = userCredential.user;
       return true;
     } catch (error) {
-      const errorCode = error.code;
       const errorMessage = error.message;
       toast.error(errorMessage);
       setLoading(false);
@@ -140,7 +136,6 @@ export const createUserDocumentFromAuth = async (
   const userData = await getDoc(userDocRef);
 
   if (!userData.exists()) {
-    const { displayName, email } = user;
     const createdAt = new Date();
 
     try {

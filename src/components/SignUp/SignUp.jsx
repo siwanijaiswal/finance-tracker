@@ -1,20 +1,20 @@
-import React from "react";
-import "./SignUp.css";
-import { useState } from "react";
-import FormInput from "../FormInput/FormInput.jsx";
-import Button from "../Button/Button.jsx";
+import React from 'react';
+import './SignUp.css';
+import { useState } from 'react';
+import FormInput from '../FormInput/FormInput.jsx';
+import Button from '../Button/Button.jsx';
 import {
   createAuthUserWithEmailAndPassword,
   signInWithGooglePopUp,
-} from "../../utils/firebase/firebase.js";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+} from '../../utils/firebase/firebase.js';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const defaultFormFields = {
-  fullName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  fullName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 };
 const SignUpSignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -44,76 +44,76 @@ const SignUpSignIn = () => {
     );
 
     if (signUpSuccess) {
-      toast.success("User created");
+      toast.success('User created');
       setLoading(false);
       setTimeout(() => {
         resetFormFields();
-        navigate("/dashboard");
+        navigate('/dashboard');
       }, 2000);
     }
   };
 
   const signUpWithGoogle = () => {
     signInWithGooglePopUp(setLoading, fullName);
-    useNavigate("/dashboard");
+    navigate('/dashboard');
   };
 
   return (
-    <div className="wrapper">
-      <div className="signup-wrapper">
-        <h2 className="signUp-header">
-          {" "}
-          Sign Up On <span style={{ color: "var(--theme)" }}>Financely.</span>
+    <div className='wrapper'>
+      <div className='signup-wrapper'>
+        <h2 className='signUp-header'>
+          {' '}
+          Sign Up On <span style={{ color: 'var(--theme)' }}>Financely.</span>
         </h2>
         <form>
           <FormInput
-            label={"Full Name"}
-            placeholder={"John Doe"}
-            type="text"
+            label={'Full Name'}
+            placeholder={'John Doe'}
+            type='text'
             required
-            name="fullName"
+            name='fullName'
             onChange={handleChange}
             value={fullName}
           />
           <FormInput
-            label={"Email"}
-            placeholder={"JohnDoe@gmail.com"}
-            type="email"
+            label={'Email'}
+            placeholder={'JohnDoe@gmail.com'}
+            type='email'
             required
-            name="email"
+            name='email'
             onChange={handleChange}
             value={email}
           />
           <FormInput
-            label={"Password"}
-            placeholder={"Your Password"}
-            type="password"
+            label={'Password'}
+            placeholder={'Your Password'}
+            type='password'
             required
-            name="password"
+            name='password'
             onChange={handleChange}
             value={password}
           />
           <FormInput
-            label={"Confirm Password"}
-            placeholder={"Confirm Password"}
-            type="password"
+            label={'Confirm Password'}
+            placeholder={'Confirm Password'}
+            type='password'
             required
-            name="confirmPassword"
+            name='confirmPassword'
             onChange={handleChange}
             value={confirmPassword}
           />
-          <Button type="button" disabled={loading} onClick={signUpWithEmail}>
-            {loading ? "Loading..." : "Signup With Email"}
+          <Button type='button' disabled={loading} onClick={signUpWithEmail}>
+            {loading ? 'Loading...' : 'Signup With Email'}
           </Button>
-          <p style={{ textAlign: "center", margin: 0 }}>Or</p>
+          <p style={{ textAlign: 'center', margin: 0 }}>Or</p>
           <Button blue={true} disabled={loading} onClick={signUpWithGoogle}>
-            {loading ? "Loading..." : "Signup With Google"}
+            {loading ? 'Loading...' : 'Signup With Google'}
           </Button>
-          <Link className="p-login" to="/">
+          <Link className='p-login' to='/'>
             Or Have an Account Already? Click here
           </Link>
         </form>
-      </div>{" "}
+      </div>{' '}
     </div>
   );
 };
