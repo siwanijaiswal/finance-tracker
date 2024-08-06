@@ -5,11 +5,10 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile,
+  signInWithPopup,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
-
 const env = import.meta.env;
 
 const firebaseConfig = {
@@ -29,6 +28,35 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 export { doc, setDoc };
+
+googleProvider.setCustomParameters({
+  prompt: "select_account",
+});
+
+export const signInWithGooglePopUp = (setLoading, fullName) => {
+  setLoading(true);
+  try {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        console.log("user is", user);
+        createUserDocumentFromAuth(user, fullName, setLoading);
+        toast.success("user authenticated");
+        setLoading(false);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast.error(errorMessage);
+        setLoading(false);
+      });
+  } catch (error) {
+    toast.error(error.message);
+    setLoading(false);
+  }
+};
 
 export const createAuthUserWithEmailAndPassword = async (
   fullName,
@@ -51,7 +79,6 @@ export const createAuthUserWithEmailAndPassword = async (
           password
         );
         const user = userCredential.user;
-        console.log(user);
         await createUserDocumentFromAuth(user, fullName, setLoading);
         return true;
       } catch (error) {
@@ -86,12 +113,10 @@ export const signInAuthUserWithEmailAndPassword = async (
         password
       );
       const user = userCredential.user;
-      console.log("user logged in", user);
       return true;
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorMessage);
       toast.error(errorMessage);
       setLoading(false);
       return false;
@@ -110,7 +135,6 @@ export const createUserDocumentFromAuth = async (
 ) => {
   setLoading(true);
   if (!user) return;
-
   const userDocRef = doc(db, "users", user.uid);
   const userData = await getDoc(userDocRef);
 
@@ -131,11 +155,7 @@ export const createUserDocumentFromAuth = async (
       toast.error(error.message);
       setLoading(false);
     }
-  }
-  //if userdata exists then return userDocRef
-  // return userDocRef;
-  else {
-    toast.error("doc already exists");
+  } else {
     setLoading(false);
   }
 };

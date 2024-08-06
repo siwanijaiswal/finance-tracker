@@ -3,18 +3,22 @@ import "../SignUp/SignUp.css";
 import { useState } from "react";
 import FormInput from "../FormInput/FormInput.jsx";
 import Button from "../Button/Button.jsx";
-import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.js";
+import {
+  signInAuthUserWithEmailAndPassword,
+  signInWithGooglePopUp,
+} from "../../utils/firebase/firebase.js";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const defaultFormFields = {
   email: "",
   password: "",
+  fullname: "",
 };
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { email, password } = formFields;
+  const { email, password, fullname } = formFields;
   const navigate = useNavigate();
 
   const resetFormFields = () => {
@@ -44,6 +48,11 @@ const SignIn = () => {
         navigate("/dashboard");
       }, 2000);
     }
+  };
+
+  const signInWithGoogle = () => {
+    signInWithGooglePopUp(setLoading, fullname);
+    navigate("/dashboard");
   };
 
   return (
@@ -77,7 +86,7 @@ const SignIn = () => {
             {loading ? "Loading..." : "  Login Using Email and Password"}
           </Button>
           <p style={{ textAlign: "center", margin: 0 }}>Or</p>
-          <Button blue={true} disabled={loading} onClick={signInWithEmail}>
+          <Button blue={true} disabled={loading} onClick={signInWithGoogle}>
             {loading ? "Loading..." : "Login Using Google"}
           </Button>
           <Link className="p-login" to="/sign-up">

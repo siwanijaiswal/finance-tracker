@@ -5,7 +5,7 @@ import FormInput from "../FormInput/FormInput.jsx";
 import Button from "../Button/Button.jsx";
 import {
   createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
+  signInWithGooglePopUp,
 } from "../../utils/firebase/firebase.js";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -51,6 +51,10 @@ const SignUpSignIn = () => {
         navigate("/dashboard");
       }, 2000);
     }
+  };
+
+  const signUpWithGoogle = () => {
+    signInWithGooglePopUp(setLoading, fullName);
   };
 
   return (
@@ -101,7 +105,7 @@ const SignUpSignIn = () => {
             {loading ? "Loading..." : "Signup With Email"}
           </Button>
           <p style={{ textAlign: "center", margin: 0 }}>Or</p>
-          <Button blue={true} disabled={loading} onClick={signUpWithEmail}>
+          <Button blue={true} disabled={loading} onClick={signUpWithGoogle}>
             {loading ? "Loading..." : "Signup With Google"}
           </Button>
           <Link className="p-login" to="/">
