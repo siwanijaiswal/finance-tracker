@@ -1,10 +1,11 @@
 import React from "react";
-import "./SignIn.css";
+import "../SignUp/SignUp.css";
 import { useState } from "react";
 import FormInput from "../FormInput/FormInput.jsx";
 import Button from "../Button/Button.jsx";
-import { createAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.js";
-import { Link } from "react-router-dom";
+import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.js";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const defaultFormFields = {
   email: "",
@@ -14,6 +15,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const navigate = useNavigate();
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -28,7 +30,21 @@ const SignIn = () => {
     event.preventDefault();
     console.log("email", email);
     console.log("password", password);
-    resetFormFields();
+
+    setLoading(true);
+    const signInSuccess = await signInAuthUserWithEmailAndPassword(
+      email,
+      password
+    );
+    setLoading(false);
+
+    if (signInSuccess) {
+      toast.success("User logged in successfully");
+      setTimeout(() => {
+        resetFormFields();
+        navigate("/dashboard");
+      }, 2000);
+    }
   };
 
   return (
@@ -58,11 +74,12 @@ const SignIn = () => {
             value={password}
           />
           <Button type="button" disabled={loading} onClick={signInWithEmail}>
-            Login Using Email and Password
+            {" "}
+            {loading ? "loading..." : "  Login Using Email and Password"}
           </Button>
           <p style={{ textAlign: "center", margin: 0 }}>Or</p>
           <Button blue={true} disabled={loading} onClick={signInWithEmail}>
-            Login Using Google
+            {loading ? "loading..." : "Login Using Google"}
           </Button>
           <Link className="p-login" to="/sign-up">
             Or Don't Have An Account? Click Here

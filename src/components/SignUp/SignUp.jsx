@@ -4,8 +4,8 @@ import { useState } from "react";
 import FormInput from "../FormInput/FormInput.jsx";
 import Button from "../Button/Button.jsx";
 import { createAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.js";
-import SignIn from "../SignIn/SignIn.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const defaultFormFields = {
   fullName: "",
@@ -17,6 +17,7 @@ const SignUpSignIn = () => {
   const [loading, setLoading] = useState(false);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { fullName, email, password, confirmPassword } = formFields;
+  const navigate = useNavigate();
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -29,14 +30,24 @@ const SignUpSignIn = () => {
 
   const signUpWithEmail = async (event) => {
     event.preventDefault();
-    await createAuthUserWithEmailAndPassword(
+    setLoading(true);
+
+    const signUpSuccess = await createAuthUserWithEmailAndPassword(
       fullName,
       email,
       password,
       confirmPassword,
       setLoading
     );
-    resetFormFields();
+    setLoading(false);
+
+    if (signUpSuccess) {
+      toast.success("User signup successfully");
+      setTimeout(() => {
+        resetFormFields();
+        navigate("/dashboard");
+      }, 2000);
+    }
   };
 
   return (
