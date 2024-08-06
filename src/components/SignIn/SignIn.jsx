@@ -28,18 +28,17 @@ const SignIn = () => {
 
   const signInWithEmail = async (event) => {
     event.preventDefault();
-    console.log("email", email);
-    console.log("password", password);
 
     setLoading(true);
     const signInSuccess = await signInAuthUserWithEmailAndPassword(
       email,
-      password
+      password,
+      setLoading
     );
-    setLoading(false);
 
     if (signInSuccess) {
       toast.success("User logged in successfully");
+      setLoading(false);
       setTimeout(() => {
         resetFormFields();
         navigate("/dashboard");
@@ -75,11 +74,11 @@ const SignIn = () => {
           />
           <Button type="button" disabled={loading} onClick={signInWithEmail}>
             {" "}
-            {loading ? "loading..." : "  Login Using Email and Password"}
+            {loading ? "Loading..." : "  Login Using Email and Password"}
           </Button>
           <p style={{ textAlign: "center", margin: 0 }}>Or</p>
           <Button blue={true} disabled={loading} onClick={signInWithEmail}>
-            {loading ? "loading..." : "Login Using Google"}
+            {loading ? "Loading..." : "Login Using Google"}
           </Button>
           <Link className="p-login" to="/sign-up">
             Or Don't Have An Account? Click Here

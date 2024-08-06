@@ -3,7 +3,10 @@ import "./SignUp.css";
 import { useState } from "react";
 import FormInput from "../FormInput/FormInput.jsx";
 import Button from "../Button/Button.jsx";
-import { createAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.js";
+import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+} from "../../utils/firebase/firebase.js";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -39,10 +42,10 @@ const SignUpSignIn = () => {
       confirmPassword,
       setLoading
     );
-    setLoading(false);
 
     if (signUpSuccess) {
-      toast.success("User signup successfully");
+      toast.success("User created");
+      setLoading(false);
       setTimeout(() => {
         resetFormFields();
         navigate("/dashboard");
@@ -95,11 +98,11 @@ const SignUpSignIn = () => {
             value={confirmPassword}
           />
           <Button type="button" disabled={loading} onClick={signUpWithEmail}>
-            {loading ? "loading..." : "Signup With Email"}
+            {loading ? "Loading..." : "Signup With Email"}
           </Button>
           <p style={{ textAlign: "center", margin: 0 }}>Or</p>
           <Button blue={true} disabled={loading} onClick={signUpWithEmail}>
-            {loading ? "loading..." : "Signup With Google"}
+            {loading ? "Loading..." : "Signup With Google"}
           </Button>
           <Link className="p-login" to="/">
             Or Have an Account Already? Click here

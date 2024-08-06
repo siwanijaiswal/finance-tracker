@@ -5,8 +5,9 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const env = import.meta.env;
@@ -51,7 +52,7 @@ export const createAuthUserWithEmailAndPassword = async (
         );
         const user = userCredential.user;
         console.log(user);
-        // createDoc(user);
+        await createUserDocumentFromAuth(user, fullName, setLoading);
         return true;
       } catch (error) {
         const errorCode = error.code;
@@ -72,7 +73,11 @@ export const createAuthUserWithEmailAndPassword = async (
   }
 };
 
-export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+export const signInAuthUserWithEmailAndPassword = async (
+  email,
+  password,
+  setLoading
+) => {
   if (email != "" && password != "") {
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -88,15 +93,49 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
       const errorMessage = error.message;
       console.log(errorMessage);
       toast.error(errorMessage);
+      setLoading(false);
       return false;
     }
   } else {
     toast.error("All fields are mandatory");
+    setLoading(false);
     return false;
   }
 };
 
-//create user doc
-function createDoc() {
-  //make sure the userdoc with uid doesnot exists then only create userdoc otherwise dont create it.
-}
+export const createUserDocumentFromAuth = async (
+  user,
+  fullName,
+  setLoading
+) => {
+  setLoading(true);
+  if (!user) return;
+
+  const userDocRef = doc(db, "users", user.uid);
+  const userData = await getDoc(userDocRef);
+
+  if (!userData.exists()) {
+    const { displayName, email } = user;
+    const createdAt = new Date();
+
+    try {
+      await setDoc(userDocRef, {
+        fullName: user.displayName ? user.displayName : fullName,
+        email: user.email,
+        photoURL: user.photoURL ? user.photoURL : "",
+        createdAt,
+      });
+      toast.success("Doc created");
+      setLoading(false);
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  }
+  //if userdata exists then return userDocRef
+  // return userDocRef;
+  else {
+    toast.error("doc already exists");
+    setLoading(false);
+  }
+};
