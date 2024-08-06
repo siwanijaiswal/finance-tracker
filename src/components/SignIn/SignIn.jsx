@@ -13,12 +13,12 @@ import { toast } from "react-toastify";
 const defaultFormFields = {
   email: "",
   password: "",
-  fullname: "",
+  fullName: "",
 };
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { email, password, fullname } = formFields;
+  const { email, password, fullName } = formFields;
   const navigate = useNavigate();
 
   const resetFormFields = () => {
@@ -43,6 +43,7 @@ const SignIn = () => {
     if (signInSuccess) {
       toast.success("User logged in successfully");
       setLoading(false);
+
       setTimeout(() => {
         resetFormFields();
         navigate("/dashboard");
@@ -51,8 +52,8 @@ const SignIn = () => {
   };
 
   const signInWithGoogle = () => {
-    signInWithGooglePopUp(setLoading, fullname);
-    navigate("/dashboard");
+    signInWithGooglePopUp(setLoading, fullName);
+    useNavigate("/dashboard");
   };
 
   return (

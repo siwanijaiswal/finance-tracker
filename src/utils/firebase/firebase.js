@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -159,3 +160,5 @@ export const createUserDocumentFromAuth = async (
     setLoading(false);
   }
 };
+
+export const signOutUser = async () => await signOut(auth);

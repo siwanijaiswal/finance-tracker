@@ -11,8 +11,8 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <Header />
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="sign-up" element={<SignUp />} />

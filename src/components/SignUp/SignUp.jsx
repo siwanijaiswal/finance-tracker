@@ -55,6 +55,7 @@ const SignUpSignIn = () => {
 
   const signUpWithGoogle = () => {
     signInWithGooglePopUp(setLoading, fullName);
+    useNavigate("/dashboard");
   };
 
   return (
