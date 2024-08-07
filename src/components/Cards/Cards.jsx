@@ -3,7 +3,7 @@ import { Row, Card } from 'antd';
 import './Cards.css';
 import Button from '../Button/Button';
 
-const Cards = () => {
+const Cards = ({ showExpenseModel, showIncomeModel }) => {
   return (
     <div>
       <Row className='card-row'>
@@ -15,12 +15,17 @@ const Cards = () => {
         <Card className='dashboard-card'>
           <h2> Total Income </h2>
           <p>₹0 </p>
-          <Button blue={true}> Add Income </Button>
+          <Button blue={true} onClick={showIncomeModel}>
+            {' '}
+            Add Income{' '}
+          </Button>
         </Card>
         <Card className='dashboard-card'>
           <h2> Total Expense </h2>
           <p>₹0 </p>
-          <Button blue={true}>Add Expense</Button>
+          <Button blue={true} onClick={showExpenseModel}>
+            Add Expense
+          </Button>
         </Card>
       </Row>
     </div>

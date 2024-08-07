@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
   --theme: rgb(106, 106, 192);
@@ -10,14 +10,14 @@
 body {
   margin: 0;
   font-synthesis: none;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 input {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .wrapper {
@@ -26,4 +26,24 @@ input {
   align-items: center;
   width: 100vw;
   height: 90vh;
+}
+
+.custom-input {
+  border-width: 0;
+  border-bottom-width: 1px;
+  width: 100%;
+  font-size: 1rem;
+  opacity: 0.8;
+  padding: 0.5rem 0rem;
+  margin-top: 0.5rem;
+}
+
+.custom-input:focus {
+  outline: none;
+  opacity: 1;
+  transition: all 0.2s;
+}
+
+.custom-input::placeholder {
+  color: gray;
 }
