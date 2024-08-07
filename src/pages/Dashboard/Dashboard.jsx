@@ -1,7 +1,12 @@
-import React from "react";
+import React from 'react';
+import Cards from '../../components/Cards/Cards';
 
 const Dashboard = () => {
-  return <div>Its a Dashboard page</div>;
+  return (
+    <div>
+      <Cards />
+    </div>
+  );
 };
 
 export default Dashboard;
