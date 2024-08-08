@@ -8,6 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../utils/firebase/firebase';
 import { toast } from 'react-toastify';
 import { db } from '../../utils/firebase/firebase';
+import TransactionsTable from '../../components/TransactionsTable/TransactionsTable';
 
 const Dashboard = () => {
   const [user] = useAuthState(auth);
@@ -132,6 +133,7 @@ const Dashboard = () => {
             handleExpenseCancel={handleExpenseCancel}
             onFinish={onFinish}
           />
+          <TransactionsTable transactions={transactions} />
         </div>
       )}
     </div>
