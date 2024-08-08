@@ -40,7 +40,7 @@ const Dashboard = () => {
   const onFinish = (values, type) => {
     const newTransaction = {
       type: type,
-      date: moment(values.data).format('YYYY-MM-DD'),
+      date: values.date.format('YYYY-MM-DD'),
       amount: parseFloat(values.amount),
       tag: values.tag,
       name: values.name,
@@ -69,7 +69,7 @@ const Dashboard = () => {
   useEffect(() => {
     //get all docs from firebase collection
     fetchTransaction();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     calculateBalance();
@@ -88,7 +88,6 @@ const Dashboard = () => {
     });
 
     let totalCalculatedBalance = totalIncome - totalExpense;
-
     setIncome(totalIncome);
     setExpense(totalExpense);
     setTotalBalance(totalCalculatedBalance);
@@ -105,7 +104,7 @@ const Dashboard = () => {
       });
       setTransactions(transactionsArray);
       console.log('Transaction array is', transactionsArray);
-      +toast.success('Transaction fetched');
+      toast.success('Transaction fetched');
     }
     setLoading(false);
   };
