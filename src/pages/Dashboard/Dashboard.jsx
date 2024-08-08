@@ -46,6 +46,7 @@ const Dashboard = () => {
       name: values.name,
     };
     addTransaction(newTransaction);
+    console.log('new transaction', newTransaction);
   };
 
   async function addTransaction(transaction) {
