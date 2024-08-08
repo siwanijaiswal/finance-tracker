@@ -81,7 +81,7 @@ const AddExpense = ({
           </Form.Item>
           <Form.Item>
             <Button className='btn btn-blue' type='primary' htmlType='submit'>
-              Add Expense{' '}
+              Add Expense
             </Button>
           </Form.Item>
         </Form>

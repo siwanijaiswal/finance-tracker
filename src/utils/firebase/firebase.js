@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
 import {
   getAuth,
   GoogleAuthProvider,
@@ -7,9 +7,9 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-} from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-import { toast } from "react-toastify";
+} from 'firebase/auth';
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 const env = import.meta.env;
 
 const firebaseConfig = {
@@ -31,7 +31,7 @@ export const googleProvider = new GoogleAuthProvider();
 export { doc, setDoc };
 
 googleProvider.setCustomParameters({
-  prompt: "select_account",
+  prompt: 'select_account',
 });
 
 export const signInWithGooglePopUp = (setLoading, fullName) => {
@@ -41,9 +41,9 @@ export const signInWithGooglePopUp = (setLoading, fullName) => {
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
-        console.log("user is", user);
+        console.log('user is', user);
         createUserDocumentFromAuth(user, fullName, setLoading);
-        toast.success("user authenticated");
+        toast.success('user authenticated');
         setLoading(false);
       })
       .catch((error) => {
@@ -65,10 +65,10 @@ export const createAuthUserWithEmailAndPassword = async (
   setLoading
 ) => {
   if (
-    fullName != "" &&
-    email != "" &&
-    password != "" &&
-    confirmPassword != ""
+    fullName != '' &&
+    email != '' &&
+    password != '' &&
+    confirmPassword != ''
   ) {
     if (password == confirmPassword) {
       try {
@@ -92,7 +92,7 @@ export const createAuthUserWithEmailAndPassword = async (
       return false;
     }
   } else {
-    toast.error("All fields are mandatory");
+    toast.error('All fields are mandatory');
     setLoading(false);
     return false;
   }
@@ -103,7 +103,7 @@ export const signInAuthUserWithEmailAndPassword = async (
   password,
   setLoading
 ) => {
-  if (email != "" && password != "") {
+  if (email != '' && password != '') {
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -119,7 +119,7 @@ export const signInAuthUserWithEmailAndPassword = async (
       return false;
     }
   } else {
-    toast.error("All fields are mandatory");
+    toast.error('All fields are mandatory');
     setLoading(false);
     return false;
   }
@@ -132,7 +132,7 @@ export const createUserDocumentFromAuth = async (
 ) => {
   setLoading(true);
   if (!user) return;
-  const userDocRef = doc(db, "users", user.uid);
+  const userDocRef = doc(db, 'users', user.uid);
   const userData = await getDoc(userDocRef);
 
   if (!userData.exists()) {
@@ -142,10 +142,10 @@ export const createUserDocumentFromAuth = async (
       await setDoc(userDocRef, {
         fullName: user.displayName ? user.displayName : fullName,
         email: user.email,
-        photoURL: user.photoURL ? user.photoURL : "",
+        photoURL: user.photoURL ? user.photoURL : '',
         createdAt,
       });
-      toast.success("Doc created");
+      toast.success('Doc created');
       setLoading(false);
     } catch (error) {
       toast.error(error.message);
