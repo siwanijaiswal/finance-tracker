@@ -9,6 +9,8 @@ import { auth } from '../../utils/firebase/firebase';
 import { toast } from 'react-toastify';
 import { db } from '../../utils/firebase/firebase';
 import TransactionsTable from '../../components/TransactionsTable/TransactionsTable';
+import ChartComponent from '../../components/Charts/Charts';
+import NoTransactions from '../../components/NoTransactions/NoTransactions';
 
 const Dashboard = () => {
   const [user] = useAuthState(auth);
@@ -16,6 +18,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [isExpenseModalVisible, setIsExpenseModalVisible] = useState(false);
   const [isIncomeModalVisible, setIsIncomeModalVisible] = useState(false);
+  const [sortKey, setSortKey] = useState('');
 
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
@@ -112,6 +115,11 @@ const Dashboard = () => {
     }
     setLoading(false);
   };
+  let sortedTransactions = transactions.sort((a, b) => {
+    if (sortKey === 'date') {
+      return new Date(a.date) - new Date(b.date);
+    }
+  });
 
   return (
     <div>
@@ -126,6 +134,11 @@ const Dashboard = () => {
             showExpenseModel={showExpenseModel}
             showIncomeModel={showIncomeModel}
           />
+          {transactions && transactions != 0 ? (
+            <ChartComponent sortedTransactions={sortedTransactions} />
+          ) : (
+            <NoTransactions />
+          )}
           <AddIncome
             isIncomeModalVisible={isIncomeModalVisible}
             handleIncomeCancel={handleIncomeCancel}
