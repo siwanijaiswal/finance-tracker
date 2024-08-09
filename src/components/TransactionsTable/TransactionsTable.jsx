@@ -54,7 +54,7 @@ const TransactionsTable = ({ transactions }) => {
   });
 
   return (
-    <div>
+    <div className='transactions'>
       <div className='transaction-search-filter'>
         <div className='input-flex'>
           <img src={searchImg} width='16' />
@@ -88,8 +88,14 @@ const TransactionsTable = ({ transactions }) => {
           <Radio.Button value='amount'>Sort By Amount</Radio.Button>
         </Radio.Group>
         <div className='csv-btn'>
-          <button className='btn'>Export to CSV</button>
-          <label htmlFor='file-csv' className='btn btn-blue'>
+          <button className='btn' style={{ margin: '1rem 0.5rem' }}>
+            Export to CSV
+          </button>
+          <label
+            htmlFor='file-csv'
+            className='btn btn-blue'
+            style={{ margin: '1rem 0.5rem' }}
+          >
             Import from CSV
           </label>
           <input
