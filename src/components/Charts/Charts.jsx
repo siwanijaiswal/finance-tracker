@@ -46,14 +46,14 @@ const ChartComponent = ({ sortedTransactions }) => {
   return (
     <div className='charts-wrapper'>
       <div>
-        <h2 style={{ marginTop: '0' }}>Your Analytics</h2>
+        <h2 style={{ marginTop: '0' }}>Financial Statistics</h2>
         <Line
           {...config}
           onReady={(chartInstance) => (chart = chartInstance)}
         />
       </div>
       <div>
-        <h2> Your Spendings </h2>
+        <h2> Total Spendings</h2>
         <Pie
           {...spendingConfig}
           onReady={(chartInstance) => (pieChart = chartInstance)}
