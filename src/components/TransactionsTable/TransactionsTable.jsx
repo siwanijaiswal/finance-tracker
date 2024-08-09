@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import { Table, Select, Radio } from 'antd';
 import searchImg from '../../assets/search.svg';
 import './TransactionsTable.css';
-import { unparse } from 'papaparse';
+import { parse, unparse } from 'papaparse';
+import { toast } from 'react-toastify';
 
-const TransactionsTable = ({ transactions }) => {
+const TransactionsTable = ({
+  transactions,
+  fetchTransaction,
+  addTransaction,
+}) => {
   const { Option } = Select;
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
@@ -54,7 +59,7 @@ const TransactionsTable = ({ transactions }) => {
     }
   });
 
-  const exportCSV = () => {
+  const exportToCSV = () => {
     //fields are column
     var csv = unparse({
       fields: ['name', 'type', 'tag', 'date', 'amount'],
@@ -68,6 +73,29 @@ const TransactionsTable = ({ transactions }) => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const importFromCSV = (event) => {
+    event.preventDefault();
+    try {
+      parse(event.target.files[0], {
+        header: true,
+        complete: async function (results) {
+          for (const transaction of results.data) {
+            const newTransaction = {
+              ...transaction,
+              amount: parseFloat(transaction.amount),
+            };
+            await addTransaction(newTransaction, true);
+          }
+        },
+      });
+      toast.success('All transaction added');
+      fetchTransaction();
+      event.target.files = null;
+    } catch (e) {
+      toast.error(e.message);
+    }
   };
 
   return (
@@ -108,7 +136,7 @@ const TransactionsTable = ({ transactions }) => {
           <button
             className='btn'
             style={{ margin: '1rem 0.5rem' }}
-            onClick={exportCSV}
+            onClick={exportToCSV}
           >
             Export to CSV
           </button>
@@ -124,11 +152,12 @@ const TransactionsTable = ({ transactions }) => {
             type='file'
             accept='.csv'
             required
+            onChange={importFromCSV}
             style={{ display: 'none' }}
           />
         </div>
       </div>
-      <Table dataSource={sortedTransactions} columns={columns} />;
+      <Table dataSource={sortedTransactions} columns={columns} />
     </div>
   );
 };

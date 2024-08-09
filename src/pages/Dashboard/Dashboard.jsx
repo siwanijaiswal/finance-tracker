@@ -49,20 +49,24 @@ const Dashboard = () => {
     console.log('new transaction', newTransaction);
   };
 
-  async function addTransaction(transaction) {
+  async function addTransaction(transaction, many) {
     try {
       const userDocRef = await addDoc(
         collection(db, `users/${user.uid}/transactions`),
         transaction
       );
-      toast.success('Transaction Added!');
+      if (!many) {
+        toast.success('Transaction Added!');
+      }
       let newTransactionArr = transactions;
       newTransactionArr.push(transaction);
       setTransactions(newTransactionArr);
       calculateBalance();
     } catch (e) {
       console.error('error in adding document', e);
-      toast.error("Couldn't add transaction");
+      if (!many) {
+        toast.error("Couldn't add transaction");
+      }
     }
   }
 
@@ -133,7 +137,11 @@ const Dashboard = () => {
             handleExpenseCancel={handleExpenseCancel}
             onFinish={onFinish}
           />
-          <TransactionsTable transactions={transactions} />
+          <TransactionsTable
+            addTransaction={addTransaction}
+            transactions={transactions}
+            fetchTransaction={fetchTransaction}
+          />
         </div>
       )}
     </div>
