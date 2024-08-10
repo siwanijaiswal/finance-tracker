@@ -16,7 +16,6 @@ const Cards = ({
         <Card className='dashboard-card'>
           <h2> Current Balance </h2>
           <p>₹{totalBalance} </p>
-          <Button blue={true}> Reset Balance </Button>
         </Card>
         <Card className='dashboard-card'>
           <h2> Total Income </h2>

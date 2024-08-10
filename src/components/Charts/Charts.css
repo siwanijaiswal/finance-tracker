@@ -1,8 +1,6 @@
 .charts-wrapper {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 93%;
+  justify-content: space-around;
   height: auto;
   padding: 2rem;
   border-radius: 0.5rem;

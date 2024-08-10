@@ -1,63 +1,87 @@
 import React from 'react';
-import { Line, Pie } from '@ant-design/charts';
+import { Line, Pie } from 'react-chartjs-2';
 import './Charts.css';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  ArcElement,
+  Tooltip,
+  Legend
+);
 
 const ChartComponent = ({ sortedTransactions }) => {
-  const data = sortedTransactions.map((item) => {
-    return {
-      date: item.date,
-      amount: item.amount,
-    };
-  });
+  const dates = sortedTransactions.map((item) => item.date);
+  const amounts = sortedTransactions.map((item) => item.amount);
 
-  const spendingData = sortedTransactions.filter((transaction) => {
-    if (transaction.type == 'expense') {
-      return { tag: transaction.tag, amount: transaction.amount };
-    }
-  });
+  const spendingData = sortedTransactions
+    .filter((transaction) => transaction.type === 'expense')
+    .map((transaction) => ({
+      tag: transaction.tag,
+      amount: transaction.amount,
+    }));
 
-  let finalSpendings = spendingData.reduce((acc, obj) => {
-    let key = obj.tag;
+  const finalSpendings = spendingData.reduce((acc, obj) => {
+    const key = obj.tag;
     if (!acc[key]) {
-      acc[key] = { tag: obj.tag, amount: obj.amount };
+      acc[key] = obj.amount;
     } else {
-      acc[key].amount += obj.amount;
+      acc[key] += obj.amount;
     }
     return acc;
   }, {});
 
-  const config = {
-    data: data,
-    width: 700,
-    height: 400,
-    autoFit: false,
-    xField: 'date',
-    yField: 'amount',
+  const lineData = {
+    labels: dates,
+    datasets: [
+      {
+        label: 'Amount Over Time',
+        data: amounts,
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 2,
+        fill: false,
+      },
+    ],
   };
-  const spendingConfig = {
-    data: Object.values(finalSpendings),
-    width: 450,
-    angleField: 'amount',
-    colorField: 'tag',
+
+  const pieData = {
+    labels: Object.keys(finalSpendings),
+    datasets: [
+      {
+        label: 'Total Spendings',
+        data: Object.values(finalSpendings),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.6)',
+          'rgba(54, 162, 235, 0.6)',
+          'rgba(255, 206, 86, 0.6)',
+          'rgba(75, 192, 192, 0.6)',
+          'rgba(153, 102, 255, 0.6)',
+        ],
+      },
+    ],
   };
-  let chart;
-  let pieChart;
 
   return (
     <div className='charts-wrapper'>
       <div>
         <h2 style={{ marginTop: '0' }}>Financial Statistics</h2>
-        <Line
-          {...config}
-          onReady={(chartInstance) => (chart = chartInstance)}
-        />
+        <Line data={lineData} width={700} height={400} />
       </div>
       <div>
-        <h2> Total Spendings</h2>
-        <Pie
-          {...spendingConfig}
-          onReady={(chartInstance) => (pieChart = chartInstance)}
-        />
+        <h2>Total Spendings</h2>
+        <Pie data={pieData} width={450} />
       </div>
     </div>
   );
