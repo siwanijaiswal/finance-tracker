@@ -63,3 +63,15 @@ input {
 .select-input:focus {
   outline: none;
 }
+
+.password-wrapper {
+  position: relative;
+}
+
+.passwordIcon-wrapper {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  top: 37px;
+  color: #383634;
+}

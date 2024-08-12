@@ -8,6 +8,7 @@ import {
 } from '../../utils/firebase/firebase.js';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ShowPassword from '../SignUp/ShowPassword.jsx';
 
 const defaultFormFields = {
   fullName: '',
@@ -17,6 +18,7 @@ const defaultFormFields = {
 };
 const SignUpSignIn = () => {
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { fullName, email, password, confirmPassword } = formFields;
   const navigate = useNavigate();
@@ -28,6 +30,10 @@ const SignUpSignIn = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const onLoginSuccess = () => {
@@ -87,24 +93,40 @@ const SignUpSignIn = () => {
             onChange={handleChange}
             value={email}
           />
-          <FormInput
-            label={'Password'}
-            placeholder={'Your Password'}
-            type='password'
-            required
-            name='password'
-            onChange={handleChange}
-            value={password}
-          />
-          <FormInput
-            label={'Confirm Password'}
-            placeholder={'Confirm Password'}
-            type='password'
-            required
-            name='confirmPassword'
-            onChange={handleChange}
-            value={confirmPassword}
-          />
+          <div className='password-wrapper'>
+            <FormInput
+              label={'Password'}
+              placeholder={'Your Password'}
+              type={showPassword ? 'text' : 'password'}
+              required
+              name='password'
+              autoComplete='new-password'
+              onChange={handleChange}
+              value={password}
+            />
+            <ShowPassword
+              handleShowPassword={handleShowPassword}
+              showPassword={showPassword}
+            />
+          </div>
+
+          <div className='password-wrapper'>
+            <FormInput
+              label={'Confirm Password'}
+              placeholder={'Confirm Password'}
+              type={showPassword ? 'text' : 'password'}
+              required
+              name='confirmPassword'
+              onChange={handleChange}
+              autoComplete='new-password'
+              value={confirmPassword}
+            />
+            <ShowPassword
+              handleShowPassword={handleShowPassword}
+              showPassword={showPassword}
+            />
+          </div>
+
           <Button type='button' disabled={loading} onClick={signUpWithEmail}>
             {loading ? 'Loading...' : 'Signup With Email'}
           </Button>

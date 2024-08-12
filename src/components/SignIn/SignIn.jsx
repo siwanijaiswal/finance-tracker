@@ -8,6 +8,7 @@ import {
 } from '../../utils/firebase/firebase.js';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ShowPassword from '../SignUp/ShowPassword.jsx';
 
 const defaultFormFields = {
   email: '',
@@ -16,6 +17,7 @@ const defaultFormFields = {
 };
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password, fullName } = formFields;
   const navigate = useNavigate();
@@ -27,6 +29,10 @@ const SignIn = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const onLoginSuccess = () => {
@@ -76,15 +82,21 @@ const SignIn = () => {
             onChange={handleChange}
             value={email}
           />
-          <FormInput
-            label={'Password'}
-            placeholder={'Your Password'}
-            type='password'
-            required
-            name='password'
-            onChange={handleChange}
-            value={password}
-          />
+          <div className='password-wrapper'>
+            <FormInput
+              label={'Password'}
+              placeholder={'Your Password'}
+              type={showPassword ? 'text' : 'password'}
+              required
+              name='password'
+              onChange={handleChange}
+              value={password}
+            />
+            <ShowPassword
+              handleShowPassword={handleShowPassword}
+              showPassword={showPassword}
+            />
+          </div>
           <Button type='button' disabled={loading} onClick={signInWithEmail}>
             {' '}
             {loading ? 'Loading...' : '  Login Using Email and Password'}
