@@ -37,7 +37,7 @@ const SignUpSignIn = () => {
   };
 
   const onLoginSuccess = () => {
-    navigate('./dashboard');
+    navigate('/dashboard');
   };
 
   const signUpWithEmail = async (event) => {
@@ -49,7 +49,8 @@ const SignUpSignIn = () => {
       email,
       password,
       confirmPassword,
-      setLoading
+      setLoading,
+      onLoginSuccess
     );
 
     if (signUpSuccess) {
@@ -57,14 +58,12 @@ const SignUpSignIn = () => {
       setLoading(false);
       setTimeout(() => {
         resetFormFields();
-        onLoginSuccess();
       }, 2000);
     }
   };
 
   const signUpWithGoogle = () => {
-    signInWithGooglePopUp(setLoading, fullName);
-    onLoginSuccess();
+    signInWithGooglePopUp(setLoading, fullName, onLoginSuccess);
   };
 
   return (

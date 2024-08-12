@@ -15,11 +15,11 @@ const Cards = ({
       <Row className='card-row'>
         <Card className='dashboard-card'>
           <h2> Current Balance </h2>
-          <p>₹{totalBalance} </p>
+          <p>₹{parseFloat(totalBalance).toFixed(2)} </p>
         </Card>
         <Card className='dashboard-card'>
           <h2> Total Income </h2>
-          <p>₹{income} </p>
+          <p>₹{parseFloat(income).toFixed(2)} </p>
           <Button blue={true} onClick={showIncomeModel}>
             {' '}
             Add Income{' '}
@@ -27,7 +27,7 @@ const Cards = ({
         </Card>
         <Card className='dashboard-card'>
           <h2> Total Expense </h2>
-          <p>₹{expense} </p>
+          <p>₹{parseFloat(expense).toFixed(2)} </p>
           <Button blue={true} onClick={showExpenseModel}>
             Add Expense
           </Button>
@@ -36,5 +36,4 @@ const Cards = ({
     </div>
   );
 };
-
 export default Cards;

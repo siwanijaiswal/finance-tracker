@@ -34,12 +34,14 @@ googleProvider.setCustomParameters({
   prompt: 'select_account',
 });
 
-export const signInWithGooglePopUp = (setLoading, fullName) => {
+export const signInWithGooglePopUp = (setLoading, fullName, onLoginSuccess) => {
   setLoading(true);
   try {
     signInWithPopup(auth, googleProvider).then((result) => {
       GoogleAuthProvider.credentialFromResult(result);
+      console.log(result);
       createUserDocumentFromAuth(result.user, fullName, setLoading);
+      onLoginSuccess();
       toast.success('user authenticated');
       setLoading(false);
     });
@@ -56,7 +58,8 @@ export const createAuthUserWithEmailAndPassword = async (
   email,
   password,
   confirmPassword,
-  setLoading
+  setLoading,
+  onLoginSuccess
 ) => {
   if (
     fullName != '' &&
@@ -76,6 +79,7 @@ export const createAuthUserWithEmailAndPassword = async (
           fullName,
           setLoading
         );
+        onLoginSuccess();
         return true;
       } catch (error) {
         toast.error(error.message);

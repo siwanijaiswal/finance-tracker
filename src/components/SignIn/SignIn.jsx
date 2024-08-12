@@ -36,7 +36,7 @@ const SignIn = () => {
   };
 
   const onLoginSuccess = () => {
-    navigate('./dashboard');
+    navigate('/dashboard');
   };
 
   const signInWithEmail = async (event) => {
@@ -61,8 +61,7 @@ const SignIn = () => {
   };
 
   const signInWithGoogle = () => {
-    signInWithGooglePopUp(setLoading, fullName);
-    onLoginSuccess();
+    signInWithGooglePopUp(setLoading, fullName, onLoginSuccess);
   };
 
   return (
