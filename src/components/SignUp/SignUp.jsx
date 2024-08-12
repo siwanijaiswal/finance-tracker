@@ -1,6 +1,5 @@
-import React from 'react';
+import { React, useState } from 'react';
 import './SignUp.css';
-import { useState } from 'react';
 import FormInput from '../FormInput/FormInput.jsx';
 import Button from '../Button/Button.jsx';
 import {
@@ -31,6 +30,10 @@ const SignUpSignIn = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
+  const onLoginSuccess = () => {
+    navigate('./dashboard');
+  };
+
   const signUpWithEmail = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -48,14 +51,14 @@ const SignUpSignIn = () => {
       setLoading(false);
       setTimeout(() => {
         resetFormFields();
-        navigate('/dashboard');
+        onLoginSuccess();
       }, 2000);
     }
   };
 
   const signUpWithGoogle = () => {
     signInWithGooglePopUp(setLoading, fullName);
-    navigate('/dashboard');
+    onLoginSuccess();
   };
 
   return (
@@ -105,7 +108,6 @@ const SignUpSignIn = () => {
           <Button type='button' disabled={loading} onClick={signUpWithEmail}>
             {loading ? 'Loading...' : 'Signup With Email'}
           </Button>
-          <p style={{ textAlign: 'center', margin: 0 }}>Or</p>
           <Button blue={true} disabled={loading} onClick={signUpWithGoogle}>
             {loading ? 'Loading...' : 'Signup With Google'}
           </Button>

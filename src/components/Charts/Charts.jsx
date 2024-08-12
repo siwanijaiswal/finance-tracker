@@ -60,7 +60,7 @@ const ChartComponent = ({ sortedTransactions }) => {
     labels: Object.keys(finalSpendings),
     datasets: [
       {
-        label: 'Total Spendings',
+        label: 'Total Expensed',
         data: Object.values(finalSpendings),
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)',

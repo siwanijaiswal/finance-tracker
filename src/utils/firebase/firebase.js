@@ -37,22 +37,16 @@ googleProvider.setCustomParameters({
 export const signInWithGooglePopUp = (setLoading, fullName) => {
   setLoading(true);
   try {
-    signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const user = result.user;
-        console.log('user is', user);
-        createUserDocumentFromAuth(user, fullName, setLoading);
-        toast.success('user authenticated');
-        setLoading(false);
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        toast.error(errorMessage);
-        setLoading(false);
-      });
+    signInWithPopup(auth, googleProvider).then((result) => {
+      GoogleAuthProvider.credentialFromResult(result);
+      createUserDocumentFromAuth(result.user, fullName, setLoading);
+      toast.success('user authenticated');
+      setLoading(false);
+    });
   } catch (error) {
     toast.error(error.message);
+    setLoading(false);
+  } finally {
     setLoading(false);
   }
 };
@@ -77,12 +71,14 @@ export const createAuthUserWithEmailAndPassword = async (
           email,
           password
         );
-        const user = userCredential.user;
-        await createUserDocumentFromAuth(user, fullName, setLoading);
+        await createUserDocumentFromAuth(
+          userCredential.user,
+          fullName,
+          setLoading
+        );
         return true;
       } catch (error) {
-        const errorMessage = error.message;
-        toast.error(errorMessage);
+        toast.error(error.message);
         setLoading(false);
         return false;
       }
@@ -113,8 +109,7 @@ export const signInAuthUserWithEmailAndPassword = async (
       const user = userCredential.user;
       return true;
     } catch (error) {
-      const errorMessage = error.message;
-      toast.error(errorMessage);
+      toast.error(error.message);
       setLoading(false);
       return false;
     }
