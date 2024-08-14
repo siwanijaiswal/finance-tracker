@@ -54,7 +54,7 @@ const SignUpSignIn = () => {
     );
 
     if (signUpSuccess) {
-      toast.success('User created');
+      toast.success('User Signed Up');
       setLoading(false);
       setTimeout(() => {
         resetFormFields();

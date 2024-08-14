@@ -80,7 +80,9 @@ const SignIn = () => {
             name='email'
             onChange={handleChange}
             value={email}
+            autoComplete='off'
           />
+
           <div className='password-wrapper'>
             <FormInput
               label={'Password'}
@@ -90,6 +92,7 @@ const SignIn = () => {
               name='password'
               onChange={handleChange}
               value={password}
+              autoComplete='off'
             />
             <ShowPassword
               handleShowPassword={handleShowPassword}

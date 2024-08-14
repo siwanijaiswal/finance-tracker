@@ -39,10 +39,8 @@ export const signInWithGooglePopUp = (setLoading, fullName, onLoginSuccess) => {
   try {
     signInWithPopup(auth, googleProvider).then((result) => {
       GoogleAuthProvider.credentialFromResult(result);
-      console.log(result);
       createUserDocumentFromAuth(result.user, fullName, setLoading);
       onLoginSuccess();
-      toast.success('user authenticated');
       setLoading(false);
     });
   } catch (error) {
@@ -144,7 +142,6 @@ export const createUserDocumentFromAuth = async (
         photoURL: user.photoURL ? user.photoURL : '',
         createdAt,
       });
-      toast.success('Doc created');
       setLoading(false);
     } catch (error) {
       toast.error(error.message);

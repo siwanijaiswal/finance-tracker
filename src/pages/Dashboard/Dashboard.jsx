@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Cards from '../../components/Cards/Cards';
-import moment from 'moment';
 import AddExpense from '../../components/Modals/AddExpense';
 import AddIncome from '../../components/Modals/AddIncome';
 import { addDoc, collection, getDocs, query } from 'firebase/firestore';
@@ -49,7 +48,6 @@ const Dashboard = () => {
       name: values.name,
     };
     addTransaction(newTransaction);
-    console.log('new transaction', newTransaction);
   };
 
   async function addTransaction(transaction, many) {
@@ -66,7 +64,7 @@ const Dashboard = () => {
       setTransactions(newTransactionArr);
       calculateBalance();
     } catch (e) {
-      console.error('error in adding document', e);
+      toast.error(e);
       if (!many) {
         toast.error("Couldn't add transaction");
       }
@@ -110,8 +108,6 @@ const Dashboard = () => {
         transactionsArray.push(doc.data());
       });
       setTransactions(transactionsArray);
-      console.log('Transaction array is', transactionsArray);
-      toast.success('Transaction fetched');
     }
     setLoading(false);
   };

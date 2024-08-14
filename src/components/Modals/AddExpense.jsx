@@ -21,6 +21,7 @@ const AddExpense = ({
           onFinish={(values) => {
             onFinish(values, 'expense');
             form.resetFields();
+            handleExpenseCancel();
           }}
         >
           <Form.Item
