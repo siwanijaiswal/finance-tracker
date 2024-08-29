@@ -17,9 +17,14 @@ const TransactionsTable = ({
 
   const columns = [
     {
-      title: 'Name',
+      title: 'Details',
       dataIndex: 'name',
       key: 'name',
+    },
+    {
+      title: 'Amount',
+      dataIndex: 'amount',
+      key: 'amount',
     },
     {
       title: 'Type',
@@ -27,25 +32,19 @@ const TransactionsTable = ({
       key: 'type',
     },
     {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
-    },
-
-    {
       title: 'Tag',
       dataIndex: 'tag',
       key: 'tag',
     },
+    {
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
+    },
   ];
   let filteredTransactions = transactions.filter(
     (item) =>
-      item.name.toLowerCase().includes(search.toLowerCase()) &&
+      item.name?.toLowerCase().includes(search.toLowerCase()) &&
       item.type.includes(typeFilter)
   );
 

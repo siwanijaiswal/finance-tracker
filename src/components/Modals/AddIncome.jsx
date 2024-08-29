@@ -22,19 +22,6 @@ const AddIncome = ({ isIncomeModalVisible, handleIncomeCancel, onFinish }) => {
         >
           <Form.Item
             style={{ fontWeight: 600 }}
-            label='Name'
-            name='name'
-            rules={[
-              {
-                required: true,
-                message: 'Please input the source of income!',
-              },
-            ]}
-          >
-            <Input type='text' className='custom-input' />
-          </Form.Item>
-          <Form.Item
-            style={{ fontWeight: 600 }}
             label='Amount'
             name='amount'
             rules={[
@@ -46,6 +33,7 @@ const AddIncome = ({ isIncomeModalVisible, handleIncomeCancel, onFinish }) => {
           >
             <Input type='number' className='custom-input' />
           </Form.Item>
+
           <Form.Item
             style={{ fontWeight: 600 }}
             label='Date'
@@ -75,6 +63,19 @@ const AddIncome = ({ isIncomeModalVisible, handleIncomeCancel, onFinish }) => {
               <Select.Option value='investment'>Investment</Select.Option>
               <Select.Option value='freelance'> Freelance</Select.Option>
             </Select>
+          </Form.Item>
+          <Form.Item
+            style={{ fontWeight: 600 }}
+            label='Details'
+            name='name'
+            rules={[
+              {
+                required: true,
+                message: 'Please input the details of income!',
+              },
+            ]}
+          >
+            <Input type='text' className='custom-input' />
           </Form.Item>
           <Form.Item>
             <Button className='btn btn-blue' type='primary' htmlType='submit'>

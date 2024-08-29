@@ -34,8 +34,8 @@ input {
   width: 100%;
   font-size: 1rem;
   opacity: 0.8;
-  padding: 0.5rem 0rem;
-  margin-top: 0.5rem;
+  padding: 0.2rem 0rem;
+  border: 1px solid rgb(61, 60, 60);
 }
 
 .custom-input:focus {
@@ -74,4 +74,24 @@ input {
   cursor: pointer;
   top: 37px;
   color: #383634;
+}
+
+.ant-modal-content {
+  padding-bottom: 2px !important;
+  width: 420px;
+}
+
+:where(.css-dev-only-do-not-override-d2lrxs).ant-form-item {
+  margin-bottom: 14px;
+}
+
+:where(.css-dev-only-do-not-override-d2lrxs).ant-select-outlined:not(
+    .ant-select-customize-input
+  )
+  .ant-select-selector {
+  border: 1px solid rgb(61, 60, 60);
+}
+
+:where(.css-dev-only-do-not-override-d2lrxs).ant-picker .ant-picker-input {
+  padding: 0.1rem 0.1rem;
 }

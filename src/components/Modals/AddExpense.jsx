@@ -26,19 +26,6 @@ const AddExpense = ({
         >
           <Form.Item
             style={{ fontWeight: 600 }}
-            label='Name'
-            name='name'
-            rules={[
-              {
-                required: true,
-                message: 'Please input the name of transaction!',
-              },
-            ]}
-          >
-            <Input type='text' className='custom-input' />
-          </Form.Item>
-          <Form.Item
-            style={{ fontWeight: 600 }}
             label='Amount'
             name='amount'
             rules={[
@@ -79,6 +66,19 @@ const AddExpense = ({
               <Select.Option value='travelling'> Travelling</Select.Option>
               <Select.Option value='shopping'> Shopping</Select.Option>
             </Select>
+          </Form.Item>
+          <Form.Item
+            style={{ fontWeight: 600 }}
+            label='Details'
+            name='name'
+            rules={[
+              {
+                required: true,
+                message: 'Please input the details of transaction!',
+              },
+            ]}
+          >
+            <Input type='text' className='custom-input' />
           </Form.Item>
           <Form.Item>
             <Button className='btn btn-blue' type='primary' htmlType='submit'>
