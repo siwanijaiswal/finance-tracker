@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Table, Select, Radio } from 'antd';
 import searchImg from '../../assets/search.svg';
 import './TransactionsTable.css';
 import { parse, unparse } from 'papaparse';
 import { toast } from 'react-toastify';
+import { useTransaction } from '../../useContext/TransactionsProvider.jsx';
 
-const TransactionsTable = ({
-  transactions,
-  fetchTransaction,
-  addTransaction,
-}) => {
+const TransactionsTable = () => {
+  const { transactions, fetchTransaction, addTransaction } = useTransaction();
   const { Option } = Select;
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('');

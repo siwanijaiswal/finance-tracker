@@ -31,12 +31,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 40px;
+  gap: 20px;
 }
 
-.nav-transaction {
+.nav-headers {
   margin: 0;
-  font-size: 18px;
   font-weight: bold;
   color: white;
   opacity: 0.8;
@@ -45,7 +44,7 @@
   text-decoration: none;
 }
 
-.nav-transaction:hover {
+.nav-headers:hover {
   opacity: 1;
   transition: all 0.3s;
 }

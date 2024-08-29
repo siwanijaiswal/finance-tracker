@@ -36,12 +36,14 @@ const Header = () => {
     <div className='navbar-menu'>
       <p className='logo'> Financely </p>
       <div className='navbar-side-panel'>
-        <Link className='nav-transaction' to='/transactions'>
+        <Link className='nav-headers' to='/dashboard'>
+          Dashboard
+        </Link>
+        <Link className='nav-headers' to='/transactions'>
           {' '}
           <p>My Transactions </p>{' '}
         </Link>
         <div>
-          {' '}
           {user && (
             <div
               style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
@@ -58,7 +60,7 @@ const Header = () => {
                 Logout
               </p>
             </div>
-          )}{' '}
+          )}
         </div>
       </div>
     </div>
