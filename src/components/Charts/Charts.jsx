@@ -79,10 +79,12 @@ const ChartComponent = ({ sortedTransactions }) => {
         <h2 style={{ marginTop: '0' }}>Financial Statistics</h2>
         <Line data={lineData} width={700} height={400} />
       </div>
-      <div>
-        <h2>Total Spendings</h2>
-        <Pie data={pieData} width={450} />
-      </div>
+      {Object.keys(finalSpendings).length > 0 && (
+        <div>
+          <h2>Total Spendings</h2>
+          <Pie data={pieData} width={450} />
+        </div>
+      )}
     </div>
   );
 };
