@@ -5,6 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, signOutUser } from '../../utils/firebase/firebase';
 import { toast } from 'react-toastify';
 import userImg from '../../assets/user.svg';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [user, loading] = useAuthState(auth);
@@ -34,17 +35,32 @@ const Header = () => {
   return (
     <div className='navbar-menu'>
       <p className='logo'> Financely </p>
-      {user && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <img
-            src={user.photoURL ? user.photoURL : userImg}
-            style={{ height: '1.5rem', width: '1.5rem', borderRadius: '50%' }}
-          />
-          <p className='logo link' onClick={logoutFunc}>
-            Logout
-          </p>
+      <div className='navbar-side-panel'>
+        <Link className='nav-transaction' to='/transactions'>
+          {' '}
+          <p>My Transactions </p>{' '}
+        </Link>
+        <div>
+          {' '}
+          {user && (
+            <div
+              style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}
+            >
+              <img
+                src={user.photoURL ? user.photoURL : userImg}
+                style={{
+                  height: '1.5rem',
+                  width: '1.5rem',
+                  borderRadius: '50%',
+                }}
+              />
+              <p className='logo link' onClick={logoutFunc}>
+                Logout
+              </p>
+            </div>
+          )}{' '}
         </div>
-      )}
+      </div>
     </div>
   );
 };

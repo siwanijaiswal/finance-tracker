@@ -95,3 +95,15 @@ input {
 :where(.css-dev-only-do-not-override-d2lrxs).ant-picker .ant-picker-input {
   padding: 0.1rem 0.1rem;
 }
+
+/* :where(
+    .css-dev-only-do-not-override-d2lrxs
+  ).ant-select.ant-select-in-form-item {
+  width: 90%;
+} */
+
+.custom-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

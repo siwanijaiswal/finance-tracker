@@ -61,7 +61,7 @@ const TransactionsTable = ({
   const exportToCSV = () => {
     //fields are column
     var csv = unparse({
-      fields: ['name', 'type', 'tag', 'date', 'amount'],
+      fields: ['details', 'amount', 'type', 'tag', 'date'],
       data: transactions,
     });
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Form, Input, DatePicker, Select } from 'antd';
 const AddExpense = ({
   isExpenseModalVisible,
@@ -6,6 +6,18 @@ const AddExpense = ({
   onFinish,
 }) => {
   const [form] = Form.useForm();
+  const [isCustomTag, setIsCustomTag] = useState(false);
+  const [customTag, setCustomTag] = useState('');
+
+  const handleCustomTag = (value) => {
+    if (value == 'custom-tag') {
+      setIsCustomTag(true);
+    } else {
+      setIsCustomTag(false);
+      form.setFieldsValue({ tag: value });
+    }
+  };
+
   return (
     <div>
       <Modal
@@ -19,8 +31,13 @@ const AddExpense = ({
           form={form}
           layout='vertical'
           onFinish={(values) => {
+            if (isCustomTag) {
+              values.tag = customTag;
+            }
             onFinish(values, 'expense');
             form.resetFields();
+            setCustomTag('');
+            setIsCustomTag(false);
             handleExpenseCancel();
           }}
         >
@@ -61,12 +78,38 @@ const AddExpense = ({
               },
             ]}
           >
-            <Select className='select-input-2'>
+            <Select className='select-input-2' onChange={handleCustomTag}>
               <Select.Option value='food'> Food </Select.Option>
-              <Select.Option value='travelling'> Travelling</Select.Option>
               <Select.Option value='shopping'> Shopping</Select.Option>
+              <Select.Option value='others'>Others</Select.Option>
+              <Select.Option value='custom-tag'>
+                Create Tag
+                <span style={{ marginLeft: '240px' }}>
+                  <i class='fa-solid fa-pen-to-square'></i>{' '}
+                </span>
+              </Select.Option>
             </Select>
           </Form.Item>
+          {isCustomTag && (
+            <Form.Item
+              style={{ fontWeight: 600 }}
+              label='Custom Tag Name'
+              name='customTag'
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input the custom tag!',
+                },
+              ]}
+            >
+              <Input
+                type='text'
+                className='custom-input'
+                value={customTag}
+                onChange={(e) => setCustomTag(e.target.value)}
+              />
+            </Form.Item>
+          )}
           <Form.Item
             style={{ fontWeight: 600 }}
             label='Details'

@@ -26,3 +26,26 @@
   opacity: 1;
   transition: all 0.3s;
 }
+
+.navbar-side-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.nav-transaction {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  opacity: 0.8;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+}
+
+.nav-transaction:hover {
+  opacity: 1;
+  transition: all 0.3s;
+}
