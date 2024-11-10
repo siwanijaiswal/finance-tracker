@@ -39,10 +39,11 @@ const Dashboard = () => {
   const onFinish = (values, type) => {
     const newTransaction = {
       type: type,
-      date: values.date.format('YYYY-MM-DD'),
+      date: values.date ? values.date.format('YYYY-MM-DD') : null,
       amount: parseFloat(values.amount),
       tag: values.tag,
       name: values.name,
+      time: values.time ? values.time.format('hh:mm A') : null,
     };
     addTransaction(newTransaction);
   };

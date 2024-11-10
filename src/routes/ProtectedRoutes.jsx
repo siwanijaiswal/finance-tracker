@@ -7,14 +7,13 @@ import { toast } from 'react-toastify';
 const ProtectedRoute = ({ children }) => {
   const [user, loading] = useAuthState(auth);
   const toastDisplayed = useRef(false);
-  const location = useLocation;
 
   if (loading) {
     return <p>Loading...</p>;
   }
   if (!user) {
     if (!toastDisplayed.current) {
-      toast.error('User not logged in');
+      toast.info('Please login to continue...');
       toastDisplayed.current = true;
     }
     return <Navigate to='/' />;

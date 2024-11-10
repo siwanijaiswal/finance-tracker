@@ -127,6 +127,7 @@ export const createUserDocumentFromAuth = async (
   fullName,
   setLoading
 ) => {
+  console.log('usess', user);
   setLoading(true);
   if (!user) return;
   const userDocRef = doc(db, 'users', user.uid);

@@ -39,6 +39,11 @@ const TransactionsTable = () => {
       dataIndex: 'date',
       key: 'date',
     },
+    {
+      title: 'Time',
+      dataIndex: 'time',
+      key: 'time',
+    },
   ];
   let filteredTransactions = transactions.filter(
     (item) =>
@@ -59,7 +64,7 @@ const TransactionsTable = () => {
   const exportToCSV = () => {
     //fields are column
     var csv = unparse({
-      fields: ['details', 'amount', 'type', 'tag', 'date'],
+      fields: ['name', 'amount', 'type', 'tag', 'date', 'time'],
       data: transactions,
     });
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -78,11 +83,13 @@ const TransactionsTable = () => {
       parse(event.target.files[0], {
         header: true,
         complete: async function (results) {
+          console.log(results);
           for (const transaction of results.data) {
             const newTransaction = {
               ...transaction,
               amount: parseFloat(transaction.amount),
             };
+            console.log(newTransaction);
             await addTransaction(newTransaction, true);
           }
         },
@@ -125,9 +132,16 @@ const TransactionsTable = () => {
           onChange={(e) => setSortKey(e.target.value)}
           value={sortKey}
         >
-          <Radio.Button value=''> No Sort</Radio.Button>
-          <Radio.Button value='date'>Sort By Date </Radio.Button>
-          <Radio.Button value='amount'>Sort By Amount</Radio.Button>
+          <Radio.Button value='' className='input-radio-span'>
+            {' '}
+            No Sort
+          </Radio.Button>
+          <Radio.Button value='date' className='input-radio-span'>
+            By Date{' '}
+          </Radio.Button>
+          <Radio.Button value='amount' className='input-radio-span'>
+            By Amount
+          </Radio.Button>
         </Radio.Group>
         <div className='csv-btn'>
           <button

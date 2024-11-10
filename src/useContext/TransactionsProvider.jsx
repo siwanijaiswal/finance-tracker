@@ -11,6 +11,7 @@ export const useTransaction = () => useContext(TransactionsContext);
 const TransactionsProvider = ({ children }) => {
   const [user] = useAuthState(auth);
   const [transactions, setTransactions] = useState([]);
+  const [customTags, setCustomTags] = useState([]);
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
   const [totalBalance, setTotalBalance] = useState(0);
@@ -38,13 +39,39 @@ const TransactionsProvider = ({ children }) => {
       newTransactionArr.push(transaction);
       setTransactions(newTransactionArr);
       calculateBalance();
+      console.log('added', userDocRef);
     } catch (e) {
+      console.log(e);
       toast.error(e);
       if (!many) {
         toast.error("Couldn't add transaction");
       }
     }
   }
+
+  async function addTag(customTag) {
+    try {
+      const userDocRef = await addDoc(
+        collection(db, `users/${user.uid}/tags`),
+        customTag
+      );
+      //appending customTag created in customTags state
+      setCustomTags([...customTags, customTag]);
+    } catch (e) {
+      toast.error(e);
+    }
+  }
+  const fetchCustomTag = async () => {
+    if (user) {
+      const q = query(collection(db, `users/${user.id}/tags`));
+      const querySnapshot = await getDocs(q);
+      let tagArray = [];
+      querySnapshot.forEach((doc) => {
+        tagArray.push(doc.data());
+      });
+      setCustomTags(tagArray);
+    }
+  };
 
   const fetchTransaction = async () => {
     setLoading(true);
@@ -83,6 +110,9 @@ const TransactionsProvider = ({ children }) => {
         transactions,
         addTransaction,
         fetchTransaction,
+        fetchCustomTag,
+        customTags,
+        addTag,
         income,
         expense,
         totalBalance,

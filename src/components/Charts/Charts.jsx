@@ -82,7 +82,7 @@ const ChartComponent = ({ sortedTransactions }) => {
       {Object.keys(finalSpendings).length > 0 && (
         <div>
           <h2>Total Spendings</h2>
-          <Pie data={pieData} width={450} />
+          <Pie data={pieData} width={450} className='pieChart' />
         </div>
       )}
     </div>

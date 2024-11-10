@@ -21,7 +21,7 @@ const Header = () => {
     try {
       signOutUser()
         .then(() => {
-          toast.success('user logged out');
+          toast.success('Logged Out');
           navigate('/');
         })
         .catch((error) => {
